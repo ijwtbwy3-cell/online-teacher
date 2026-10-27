@@ -1,0 +1,10 @@
+{% extends "layouts/base.html" %}
+{% block content %}
+<h2 class = "text-xl font-semibold mb-6">Doubts</h2>
+{% for doubt in doubts %}
+<a href = "{% url 'doubt_detail' doubt.pk %}" class = "card p-5 bg-white block mb-3">
+<div class = "flex justify-between"><div><h3 class = "font-medium">{{ doubt.title }}</h3><p class = "text-sm text-slate-500">{{ doubt.student.full_name }} · {{ doubt.created_at|date:"d M Y" }}</p></div>
+<span class = "text-xs px-2 py-0.5 {% if doubt.status == 'open' %}bg-amber-100 text-amber-700{% else %}bg-emerald-100 text-emerald-700{% endif %}">{{ doubt.status }}</span></div>
+</a>
+{% empty %}<p class = "text-center text-slate-400 py-16">No doubts</p>{% endfor %}
+{% endblock %}

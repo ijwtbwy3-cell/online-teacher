@@ -1,0 +1,20 @@
+{% extends "layouts/base.html" %}
+{% block content %}
+<div class = "card p-6 bg-white max-w-3xl">
+  <h2 class = "text-xl font-semibold mb-2">{{ batch.name }}</h2>
+  <p class = "text-sm text-slate-500">{{ batch.description }}</p>
+  <p class = "text-sm mt-3">
+    {{ batch.student_count }} students · {{ batch.subjects_count }} subjects
+    {% if batch.end_date %}· Ends {{ batch.end_date|date:"d M Y" }}{% endif %}
+  </p>
+
+  <h3 class = "font-semibold mt-6 mb-3">Students</h3>
+  {% for student in batch.students.all %}
+    <div class = "py-2 border-b text-sm">
+      <a href = "{% url 'student_detail' student.pk %}" class = "text-blue-600">{{ student.full_name }}</a>
+    </div>
+  {% empty %}
+    <p class = "text-slate-400 text-sm">No students</p>
+  {% endfor %}
+</div>
+{% endblock %}

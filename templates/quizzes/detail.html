@@ -1,0 +1,8 @@
+{% extends "layouts/base.html" %}
+{% block content %}
+<div class = "card p-6 bg-white max-w-2xl">
+<h2 class = "text-xl font-semibold mb-2">{{ quiz.title }}</h2>
+<p class = "text-sm text-slate-500">{{ quiz.course }} · {{ quiz.subject }}</p>
+<p class = "text-sm text-slate-500 mt-2">Questions: {{ quiz.questions_count }} · Passing: {{ quiz.passing_percentage }}%</p>
+</div>
+{% endblock %}

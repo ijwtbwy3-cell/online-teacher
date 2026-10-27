@@ -1,0 +1,21 @@
+{% extends "layouts/base.html" %}
+{% block content %}
+<div class = "mb-6 flex flex-wrap items-center justify-between gap-4">
+  <h2 class = "text-xl font-semibold">Batches</h2>
+  <form method = "get" class = "flex w-full max-w-md gap-2">
+  <label for = "batch-search" class = "sr-only">Search batches</label>
+  <input id = "batch-search" type = "search" name = "q" value = "{{ search_query }}" placeholder = "Search batches..." class = "min-w-0 flex-1 border border-slate-300 bg-white px-3 py-2 text-sm">
+  <button type = "submit" class = "bg-blue-600 px-4 py-2 text-sm text-white">Search</button>
+  </form>
+</div>
+<div class = "grid grid-cols-3 gap-5">{% for batch in batches %}
+<a href = "{% url 'batch_detail' batch.pk %}" class = "card p-5 bg-white block">
+<h3 class = "font-semibold mb-2">{{ batch.name }}</h3>
+<div class = "text-xs text-slate-500 space-y-0.5 mb-3">
+<p>{{ batch.subjects_count }} Subjects</p><p>{{ batch.student_count }} Students</p>
+<p>{{ batch.quizzes.count }} Quizzes</p><p>{{ batch.exams.count }} Exams</p><p>{{ batch.assignments.count }} Assignments</p>
+</div>
+{% if batch.end_date %}<span class = "text-xs px-3 py-1 bg-slate-100">Batch Ends at {{ batch.end_date|date:"d M Y" }}</span>{% endif %}
+</a>
+{% empty %}<p class = "col-span-3 text-center text-slate-400 py-16">{% if search_query %}No matching batches{% else %}No batches{% endif %}</p>{% endfor %}</div>
+{% endblock %}

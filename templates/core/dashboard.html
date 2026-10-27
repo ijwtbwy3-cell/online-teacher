@@ -1,0 +1,96 @@
+{% extends "layouts/base.html" %}
+{% block content %}
+<div class = "grid grid-cols-3 gap-6">
+  <div>
+    <div class = "flex items-center justify-between mb-4">
+      <h2 class = "text-lg font-semibold">Live Classes</h2>
+      <a href = "{% url 'liveclass_list' %}" class = "text-xs px-3 py-1 text-emerald-700">View All</a>
+    </div>
+    <div class = "space-y-4">
+      {% for live_class in live_classes %}
+      <div class = "border border-slate-200 p-5 {% if live_class.status == 'ongoing' %}bg-red-50{% elif live_class.status == 'starting_soon' %}bg-emerald-50{% else %}bg-white{% endif %}">
+        <h3 class = "font-semibold text-slate-900 mb-2">{{ live_class.title }}</h3>
+        {% if live_class.batch %}<span class = "inline-block text-xs px-2 py-0.5 text-slate-600 mb-2">Batch {{ live_class.batch.name }}</span>{% endif %}
+        <div class = "flex items-center gap-3 text-xs text-slate-500 mb-3">
+          <span> {{ live_class.scheduled_at }}</span>
+          <span> {{ live_class.scheduled_at }}</span>
+        </div>
+        <div class = "mb-3">
+          {% if live_class.status == 'ongoing' %}
+          <span class = "text-xs px-2 py-1 text-red-600">Status : Ongoing</span>
+          {% elif live_class.status == 'starting_soon' %}
+          <span class = "text-xs px-2 py-1 text-emerald-600">Status : Starting in 60 Minutes</span>
+          {% else %}
+          <span class = "text-xs px-2 py-1 text-slate-500">Status : Not Started</span>
+          {% endif %}
+        </div>
+        <button class = "block w-full text-center bg-slate-900 text-white py-2.5 text-sm font-medium">Join Now</button>
+      </div>
+      {% empty %}
+      <p class = "text-sm text-slate-400 text-center py-8">No live classes</p>
+      {% endfor %}
+    </div>
+  </div>
+
+  <div>
+    <div class = "flex items-center justify-between mb-4">
+      <h2 class = "text-lg font-semibold">My Tasks</h2>
+      <a href = "{% url 'task_list' %}" class = "text-xs px-3 py-1 text-blue-700">Open Kan Ban</a>
+    </div>
+    <div class = "flex gap-1 mb-4 text-xs">
+      <a href = "?task_status=all" class = "px-3 py-2">All</a>
+      {% for status in task_statuses %}
+      <a href = "?task_status={{ status.code }}" class = "px-3 py-2">{{ status.label }}</a>
+      {% endfor %}
+    </div>
+    <div class = "space-y-3">
+      {% for task in tasks %}
+      <div class = "bg-white border border-slate-200 p-4">
+        <p class = "text-sm font-medium text-slate-800 mb-2">{{ task.title }}</p>
+        <div class = "flex items-center gap-4 text-xs text-slate-500 mb-2">
+          {% if task.assigned_at %}<span>Assigned  {{ task.assigned_at|date:"h:i A" }}  {{ task.assigned_at|date:"d M Y" }}</span>{% endif %}
+        </div>
+        {% if task.due_at %}<div class = "text-xs text-slate-500 mb-2">Due  {{ task.due_at|date:"h:i A" }}  {{ task.due_at|date:"d M Y" }}</div>{% endif %}
+        <div class = "flex items-center justify-between">
+          {% if task.status.code == 'not_started' %}<span class = "text-xs px-2 py-0.5 text-slate-500">{{ task.status.label }}</span>
+          {% elif task.status.code == 'ongoing' %}<span class = "text-xs px-2 py-0.5 text-blue-600">{{ task.status.label }}</span>
+          {% elif task.status.code == 'completed' %}<span class = "text-xs px-2 py-0.5 text-emerald-600">{{ task.status.label }}</span>
+          {% elif task.status.code == 'missed' %}<span class = "text-xs px-2 py-0.5 text-red-600">{{ task.status.label }}</span>
+          {% else %}<span class = "text-xs px-2 py-0.5 text-slate-500">{{ task.status.label }}</span>{% endif %}
+          <a href = "{% url 'task_list' %}" class = "text-xs px-3 py-1.5 bg-blue-600 text-white">View Details</a>
+        </div>
+      </div>
+      {% empty %}
+      <p class = "text-sm text-slate-400 text-center py-8">No tasks</p>
+      {% endfor %}
+    </div>
+  </div>
+
+
+  <div>
+    <div class = "flex items-center justify-between mb-4">
+      <h2 class = "text-lg font-semibold">My Batches</h2>
+      <a href = "{% url 'batch_list' %}" class = "text-xs px-3 py-1 text-pink-700">View All</a>
+    </div>
+    <div class = "space-y-3">
+      {% for batch in batches %}
+      <a href = "{% url 'batch_detail' batch.pk %}" class = "bg-white border border-slate-200 p-4 block">
+        <h3 class = "font-semibold text-slate-900 mb-2">{{ batch.name }}</h3>
+        <div class = "text-xs text-slate-500 space-y-0.5 mb-3">
+          <p>{{ batch.subjects_count }} Subjects</p>
+          <p>{{ batch.student_count }} Students</p>
+          <p>{{ batch.quizzes.count }} Quizzes</p>
+          <p>{{ batch.exams.count }} Exams</p>
+          <p>{{ batch.assignments.count }} Assignments</p>
+        </div>
+        {% if batch.end_date %}
+        <span class = "inline-block text-xs px-3 py-1 text-slate-600">Batch Ends at {{ batch.end_date|date:"d M Y" }}</span>
+        {% endif %}
+      </a>
+      {% empty %}
+      <p class = "text-sm text-slate-400 text-center py-8">No batches</p>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+{% endblock %}

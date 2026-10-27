@@ -1,0 +1,35 @@
+{% extends "layouts/base.html" %}
+{% block content %}
+<div class = "flex items-center justify-between mb-6">
+  <h2 class = "text-xl font-semibold">Quizzes</h2>
+  <a href = "{% url 'quiz_create' %}" class = "px-4 py-2 bg-blue-600 text-white text-sm font-medium">+ Add Quiz</a>
+</div>
+<div class = "mb-6 flex flex-wrap items-center justify-between gap-4">
+  <div class = "flex gap-6 text-sm">
+    <a href = "?tab=scheduled" class = "pb-3 text-slate-600">Scheduled Quizzes</a>
+    <span class = "pb-3 text-slate-400">Question Bank</span>
+    <span class = "pb-3 text-slate-400">History</span>
+  </div>
+  <form method = "get" class = "flex w-full max-w-md gap-2">
+    <label for = "quiz-search" class = "sr-only">Search quizzes</label>
+    <input id = "quiz-search" type = "search" name = "q" value = "{{ search_query }}" placeholder = "Search quizzes..." class = "min-w-0 flex-1 border border-slate-300 bg-white px-3 py-2 text-sm">
+    <button type = "submit" class = "bg-blue-600 px-4 py-2 text-sm text-white">Search</button>
+  </form>
+</div>
+<div class = "grid grid-cols-3 gap-5">
+{% for quiz in quizzes %}
+<div class = "card p-5 bg-white">
+  <h3 class = "font-semibold mb-2">{{ quiz.title }}</h3>
+  {% if quiz.course %}<p class = "text-xs text-slate-500">Course : {{ quiz.course }}</p>{% endif %}
+  {% if quiz.subject %}<p class = "text-xs text-slate-500 mb-3">Subject : {{ quiz.subject }}</p>{% endif %}
+  <div class = "flex gap-3 text-xs text-slate-500 mb-2">
+    <span> {{ quiz.start_at }}{% if quiz.end_at %} - {{ quiz.end_at }}{% endif %}</span>
+  </div>
+  <p class = "text-xs text-slate-500 mb-2">Questions : {{ quiz.questions_count }}</p>
+  <div class = "mb-3">
+  </div>
+  <a href = "{% url 'quiz_detail' quiz.pk %}" class = "block w-full text-center bg-blue-600 text-white py-2.5 text-sm font-medium">View Details</a>
+</div>
+{% empty %}<p class = "col-span-3 text-center text-slate-400 py-16">{% if search_query %}No matching quizzes{% else %}No quizzes{% endif %}</p>{% endfor %}
+</div>
+{% endblock %}

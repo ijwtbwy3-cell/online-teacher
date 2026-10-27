@@ -1,0 +1,39 @@
+{% extends "layouts/base.html" %}
+{% block content %}
+<div class = "mx-auto min-h-[calc(100vh-128px)] max-w-5xl bg-white p-6 sm:p-8">
+  <div class = "mb-6 flex flex-wrap items-center gap-3 border-b border-slate-100 pb-5">
+    <a href = "{% url 'schedule' %}" aria-label = "Close" class = "mr-2 text-xl text-slate-500">&times;</a>
+    <h2 class = "mr-auto text-xl font-semibold text-slate-700">Class Details</h2>
+    <form method = "post" class = "flex flex-wrap items-center gap-3">
+      {% csrf_token %}
+      <label for = "class-status" class = "sr-only">Class status</label>
+      <select id = "class-status" name = "status" class = "border border-slate-200 bg-slate-100 px-3 py-2 text-sm text-slate-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
+        {% for value, label in statuses %}
+        <option value = "{{ value }}" {% if live_class.status == value %}selected{% endif %}>{{ label }}</option>
+        {% endfor %}
+      </select>
+      <span class = "bg-rose-50 px-3 py-2 text-xs text-rose-600">{{ live_class.scheduled_at|date:"h:i A | d M Y" }}</span>
+      <button type = "submit" class = "bg-blue-600 px-6 py-2 text-sm font-medium text-white">Save</button>
+    </form>
+  </div>
+
+  <div class = "space-y-6">
+    <div>
+      <p class = "mb-1 text-xs text-slate-500">Title</p>
+      <h3 class = "text-base font-semibold text-slate-700">{{ live_class.title }}</h3>
+    </div>
+    <div>
+      <p class = "mb-1 text-xs text-slate-500">Assigned by</p>
+      <p class = "font-medium text-slate-700">{% if live_class.teacher %}{{ live_class.teacher.get_full_name|default:live_class.teacher.username }}{% else %}Not assigned{% endif %}</p>
+    </div>
+    <div>
+      <p class = "mb-1 text-xs text-slate-500">Batch</p>
+      <p class = "font-medium text-slate-700">{% if live_class.batch %}{{ live_class.batch.name }}{% else %}No batch assigned{% endif %}</p>
+    </div>
+    <div>
+      <p class = "mb-1 text-xs text-slate-500">Duration</p>
+      <p class = "font-medium text-slate-700">{{ live_class.duration_minutes }} minutes</p>
+    </div>
+  </div>
+</div>
+{% endblock %}

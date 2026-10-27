@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang = "en">
+<head>
+<meta charset = "UTF-8">
+<meta name = "viewport" content = "width=device-width, initial-scale=1.0">
+<script src = "https://cdn.tailwindcss.com"></script>
+
+</head>
+<body class = "bg-white text-slate-800">
+<div class = "flex min-h-screen">
+  <aside class = "w-56 flex-shrink-0 border-r border-slate-100 bg-white flex flex-col fixed h-full">
+    <div class = "px-5 py-5 flex items-center gap-2">
+      <span class = "font-bold text-lg tracking-tight">TIPS-G</span>
+    </div>
+    <nav class = "flex-1 px-3 space-y-0.5 text-sm">
+      <a href = "{% url 'dashboard' %}" class = "nav-item flex items-center gap-3 px-3 py-2.5 text-slate-600">
+        Dashboard
+      </a>
+      <a href = "{% url 'liveclass_list' %}" class = "nav-item flex items-center gap-3 px-3 py-2.5 text-slate-600">
+        Live Classes
+      </a>
+      <a href = "{% url 'schedule' %}" class = "nav-item flex items-center gap-3 px-3 py-2.5 text-slate-600">
+        Schedule
+      </a>
+      <a href = "{% url 'quiz_list' %}" class = "nav-item flex items-center gap-3 px-3 py-2.5 text-slate-600">
+        Quizzes
+      </a>
+      <a href = "{% url 'exam_list' %}" class = "nav-item flex items-center gap-3 px-3 py-2.5 text-slate-600">
+        Exams
+      </a>
+      <a href = "{% url 'assignment_list' %}" class = "nav-item flex items-center gap-3 px-3 py-2.5 text-slate-600">
+        Assignments
+      </a>
+      <a href = "{% url 'batch_list' %}" class = "nav-item flex items-center gap-3 px-3 py-2.5 text-slate-600">
+        Batches
+      </a>
+      <a href = "{% url 'student_list' %}" class = "nav-item flex items-center gap-3 px-3 py-2.5 text-slate-600">
+        Students
+      </a>
+      <a href = "{% url 'doubt_list' %}" class = "nav-item flex items-center gap-3 px-3 py-2.5 text-slate-600">
+        Doubts
+      </a>
+    </nav>
+  </aside>
+
+
+  <div class = "flex-1 ml-56">
+
+    <header class = "bg-blue-600 text-white px-8 py-4 flex items-center justify-between">
+      <h1 class = "text-xl font-semibold">Hi, {{ request.user.username }}</h1>
+      <div class = "relative">
+        <input id = "account-menu-toggle" type = "checkbox" class = "peer sr-only">
+        <label for = "account-menu-toggle" class = "block cursor-pointer">
+          <span class = "flex h-7 w-7 items-center justify-center overflow-hidden rounded-full bg-blue-100 text-sm font-semibold">
+            {% if request.user.avatar %}
+            <img src = "{{ request.user.avatar.url }}" alt = "" class = "h-full w-full object-cover">
+            {% else %}
+            {{ request.user.username|first|upper }}
+            {% endif %}
+          </span>
+        </label>
+        <div class = "absolute right-0 z-20 mt-3 hidden w-60 overflow-hidden border border-slate-100 bg-white py-2 text-slate-700 shadow-lg peer-checked:block">
+          <a href = "{% url 'profile' %}" class = "block px-4 py-3 text-sm">
+            My Profile
+          </a>
+          <a href = "{% url 'liveclass_list' %}?tab=history" class = "block px-4 py-3 text-sm">
+            Class History
+          </a>
+          <a href = "{% url 'logout' %}" class = "flex items-center px-4 py-3 text-sm font-medium text-red-600">
+            Log Out
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <main class = "p-8 bg-slate-50 min-h-[calc(100vh-64px)]">
+      {% if messages %}
+      {% for message in messages %}
+      <div class = "mb-4 px-4 py-3 text-sm {% if message.tags == 'error' %}bg-red-50 text-red-700{% else %}bg-emerald-50 text-emerald-700{% endif %}">{{ message }}</div>
+      {% endfor %}
+      {% endif %}
+      {% block content %}{% endblock %}
+    </main>
+  </div>
+</div>
+</body>
+</html>

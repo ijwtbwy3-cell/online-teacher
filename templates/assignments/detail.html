@@ -1,0 +1,5 @@
+{% extends "layouts/base.html" %}
+{% block content %}
+<div class = "card p-6 bg-white max-w-2xl mb-6"><h2 class = "text-xl font-semibold">{{ assignment.title }}</h2><p class = "text-sm text-slate-500 mt-2">{{ assignment.description }}</p><p class = "text-sm mt-2">Due: {{ assignment.due_date|date:"d M Y H:i"|default:"—" }} · {{ assignment.max_marks }} marks</p></div>
+<div class = "card p-6 bg-white max-w-2xl"><h3 class = "font-semibold mb-3">Submissions</h3>{% for submission in submissions %}<div class = "py-2 border-b text-sm">{{ submission.student.full_name }} — {{ submission.marks_obtained|default:"—" }}</div>{% empty %}<p class = "text-slate-400 text-sm">None</p>{% endfor %}</div>
+{% endblock %}

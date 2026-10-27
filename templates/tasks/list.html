@@ -1,0 +1,24 @@
+{% extends "layouts/base.html" %}
+{% block content %}
+<h2 class = "text-xl font-semibold mb-6">My Tasks</h2>
+
+<div class = "flex gap-2 mb-6 text-sm">
+<a href = "?status=all" class = "px-3 py-1.5">all</a>
+{% for status in statuses %}
+<a href = "?status={{ status.code }}" class = "px-3 py-1.5">{{ status.label }}</a>
+{% endfor %}
+</div>
+
+{% for task in tasks %}
+<div class = "card p-5 bg-white mb-3">
+<p class = "font-medium mb-2">{{ task.title }}</p>
+<span class = "text-xs px-2 py-0.5 bg-slate-100">{{ task.status.label }}</span>
+
+<form method = "post" action = "{% url 'task_update_status' task.pk %}">{% csrf_token %}
+{% for status in statuses %}
+<button name = "status" value = "{{ status.code }}" class = "text-xs px-2 py-1">{{ status.label }}</button>
+{% endfor %}
+</form>
+</div>
+{% empty %}<p class = "text-center text-slate-400 py-16">No tasks</p>{% endfor %}
+{% endblock %}

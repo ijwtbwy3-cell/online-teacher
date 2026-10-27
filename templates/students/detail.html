@@ -1,0 +1,178 @@
+{% extends "layouts/base.html" %}
+{% block content %}
+<div class = "-m-8 min-h-[calc(100vh-64px)] bg-white">
+  <div class = "border-b border-slate-200 px-6 pt-8">
+    <a href = "{% url 'student_list' %}" class = "mb-6 inline-flex items-center gap-2 text-sm text-slate-700">Student Profile
+    </a>
+
+    <div class = "flex flex-wrap items-center justify-between gap-6 pb-6">
+      <div class = "flex items-center gap-4">
+        <div class = "flex h-14 w-14 items-center justify-center rounded-full bg-blue-100 text-lg font-semibold text-blue-700">
+          {{ student.first_name|first|upper }}
+        </div>
+        <div>
+          <h1 class = "font-semibold text-slate-800">{{ student.full_name }}</h1>
+          <p class = "text-xs text-slate-600">Student ID: {{ student.pk }}</p>
+          <p class = "text-xs text-slate-600">{{ student.email }}</p>
+        </div>
+      </div>
+      <div class = "min-w-48 bg-fuchsia-50 px-5 py-3">
+        <p class = "text-sm font-semibold text-slate-700">Attendance</p>
+        <div class = "flex items-end justify-between gap-6">
+          <span class = "text-3xl font-semibold text-fuchsia-700">{{ attendance.percentage }}%</span>
+          <span class = "text-sm text-slate-700"><span class = "font-semibold text-emerald-600">{{ attendance.attended }}</span>/{{ attendance.total }}</span>
+        </div>
+      </div>
+    </div>
+
+    <nav class = "-mb-px flex flex-wrap gap-6 text-sm" role = "tablist" aria-label = "Student profile sections">
+      <a href = "#general" id = "general-tab" role = "tab" aria-controls = "general" aria-selected = "true" data-student-tab class = "border-b-2 border-blue-500 px-1 pb-3 text-blue-600">General</a>
+      <a href = "#quiz" id = "quiz-tab" role = "tab" aria-controls = "quiz" aria-selected = "false" data-student-tab class = "px-1 pb-3 text-slate-500">Quiz</a>
+      <a href = "#exams" id = "exams-tab" role = "tab" aria-controls = "exams" aria-selected = "false" data-student-tab class = "px-1 pb-3 text-slate-500">Exams</a>
+      <a href = "#assignments" id = "assignments-tab" role = "tab" aria-controls = "assignments" aria-selected = "false" data-student-tab class = "px-1 pb-3 text-slate-500">Assignment</a>
+      <a href = "#classes" id = "classes-tab" role = "tab" aria-controls = "classes" aria-selected = "false" data-student-tab class = "px-1 pb-3 text-slate-500">Classes</a>
+    </nav>
+  </div>
+
+  <div class = "px-6 py-6">
+    <section id = "general" role = "tabpanel" aria-labelledby = "general-tab" data-student-panel class = "grid gap-8 md:grid-cols-2">
+      <div class = "space-y-3 text-sm text-slate-700">
+        <p><span class = "font-semibold">Full name:</span> {{ student.full_name }}</p>
+        <p><span class = "font-semibold">Email:</span> {{ student.email }}</p>
+        <p><span class = "font-semibold">Phone:</span> {{ student.phone|default:"Not provided" }}</p>
+        <p><span class = "font-semibold">Status:</span> {{ student.status|title }}</p>
+        <p><span class = "font-semibold">Enrolled:</span> {{ student.enrollment_date|date:"d M Y" }}</p>
+        {% if student.notes %}<p><span class = "font-semibold">Notes:</span> {{ student.notes }}</p>{% endif %}
+      </div>
+
+      <div class = "border border-slate-200 p-4">
+        <h2 class = "mb-3 font-semibold text-slate-700">Batch Details</h2>
+        {% for batch in batches %}
+        <div class = "{% if not forloop.first %}mt-4 border-t border-slate-100 pt-4{% endif %}">
+          <a href = "{% url 'batch_detail' batch.pk %}" class = "font-medium text-slate-700">{{ batch.name }}</a>
+          {% if batch.description %}<p class = "mt-1 text-xs text-slate-500">{{ batch.description }}</p>{% endif %}
+          {% if batch.teacher %}
+          <p class = "mt-2 text-xs text-slate-500">Teacher: {{ batch.teacher.get_full_name|default:batch.teacher.username }}</p>
+          {% endif %}
+        </div>
+        {% empty %}
+        <p class = "text-sm text-slate-500">No batches assigned</p>
+        {% endfor %}
+      </div>
+    </section>
+
+    <section id = "quiz" role = "tabpanel" aria-labelledby = "quiz-tab" data-student-panel hidden style = "display: none;">
+      <h2 class = "mb-3 font-semibold text-slate-700">Quizzes for {{ student.full_name }}</h2>
+      <div class = "divide-y divide-slate-100">
+        {% for quiz in quizzes %}
+        <a href = "{% url 'quiz_detail' quiz.pk %}" class = "flex flex-wrap justify-between gap-3 py-3 text-sm">
+          <span class = "font-medium text-blue-600">{{ quiz.title }}</span>
+          <span class = "text-slate-500">{{ quiz.batch.name }}{% if quiz.subject %} · {{ quiz.subject }}{% endif %}</span>
+        </a>
+        {% empty %}
+        <p class = "py-2 text-sm text-slate-500">No quizzes assigned to this student's batches.</p>
+        {% endfor %}
+      </div>
+    </section>
+
+    <section id = "exams" role = "tabpanel" aria-labelledby = "exams-tab" data-student-panel hidden style = "display: none;">
+      <h2 class = "mb-3 font-semibold text-slate-700">Exams for {{ student.full_name }}</h2>
+      <div class = "divide-y divide-slate-100">
+        {% for exam in exams %}
+        <a href = "{% url 'exam_detail' exam.pk %}" class = "flex flex-wrap justify-between gap-3 py-3 text-sm">
+          <span class = "font-medium text-blue-600">{{ exam.title }}</span>
+          <span class = "text-slate-500">{{ exam.batch.name }}{% if exam.subject %} · {{ exam.subject }}{% endif %}</span>
+        </a>
+        {% empty %}
+        <p class = "py-2 text-sm text-slate-500">No exams assigned to this student's batches.</p>
+        {% endfor %}
+      </div>
+    </section>
+
+    <section id = "assignments" role = "tabpanel" aria-labelledby = "assignments-tab" data-student-panel hidden style = "display: none;" class = "grid gap-8 md:grid-cols-2">
+      <div>
+        <h2 class = "mb-3 font-semibold text-slate-700">Assignments for {{ student.full_name }}</h2>
+        <div class = "divide-y divide-slate-100">
+          {% for assignment in assignments %}
+          <div class = "flex flex-wrap justify-between gap-3 py-3 text-sm">
+            <a href = "{% url 'assignment_detail' assignment.pk %}" class = "font-medium text-blue-600">{{ assignment.title }}</a>
+            <span class = "text-slate-500">{{ assignment.batch.name }}</span>
+            {% for submission in submissions %}
+            {% if submission.assignment_id == assignment.pk %}
+            <span class = "w-full text-xs text-emerald-600">
+              Submitted{% if submission.marks_obtained != None %} · {{ submission.marks_obtained }} marks{% endif %}
+            </span>
+            {% endif %}
+            {% endfor %}
+          </div>
+          {% empty %}
+          <p class = "py-2 text-sm text-slate-500">No assignments assigned to this student's batches.</p>
+          {% endfor %}
+        </div>
+      </div>
+    </section>
+
+    <section id = "classes" role = "tabpanel" aria-labelledby = "classes-tab" data-student-panel hidden style = "display: none;" class = "grid gap-8 md:grid-cols-2">
+      <div>
+        <div class = "mb-6 max-w-xl border border-slate-200 p-4">
+          <h2 class = "mb-2 font-semibold text-slate-700">Attendance</h2>
+          <p class = "text-sm">Total classes: {{ attendance.total }}</p>
+          <p class = "text-sm text-emerald-600">Attended: {{ attendance.attended }}</p>
+          <p class = "text-sm text-rose-600">Missed: {{ attendance.missed }}</p>
+        </div>
+        <h2 class = "mb-3 font-semibold text-slate-700">Attendance history for {{ student.full_name }}</h2>
+        <div class = "divide-y divide-slate-100">
+          {% for record in attendance_records %}
+          <div class = "flex justify-between gap-3 py-3 text-sm">
+            <span>{{ record.session.batch.name }} · {{ record.session.date|date:"d M Y" }}</span>
+            <span class = "text-slate-500">{{ record.status|title }}</span>
+          </div>
+          {% empty %}
+          <p class = "py-2 text-sm text-slate-500">No attendance recorded for this student.</p>
+          {% endfor %}
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+<script>
+  const studentTabs = document.querySelectorAll('[data-student-tab]');
+  const studentPanels = document.querySelectorAll('[data-student-panel]');
+
+  function activateStudentTab(tabId) {
+    studentPanels.forEach((panel) => {
+      panel.hidden = panel.id !== tabId;
+      panel.style.display = panel.hidden ? 'none' : '';
+    });
+
+    studentTabs.forEach((tab) => {
+      const isActive = tab.getAttribute('aria-controls') === tabId;
+      tab.setAttribute('aria-selected', isActive);
+      tab.classList.toggle('border-b-2', isActive);
+      tab.classList.toggle('border-blue-500', isActive);
+      tab.classList.toggle('text-blue-600', isActive);
+      tab.classList.toggle('text-slate-500', !isActive);
+    });
+  }
+
+  studentTabs.forEach((tab) => {
+    tab.addEventListener('click', () => {
+      activateStudentTab(tab.getAttribute('aria-controls'));
+    });
+  });
+
+  window.addEventListener('hashchange', () => {
+    const tabId = window.location.hash.slice(1);
+    if (Array.from(studentPanels).some((panel) => panel.id === tabId)) {
+      activateStudentTab(tabId);
+    }
+  });
+
+  const initialTabId = window.location.hash.slice(1);
+  activateStudentTab(
+    Array.from(studentPanels).some((panel) => panel.id === initialTabId)
+      ? initialTabId
+      : 'general'
+  );
+</script>
+{% endblock %}
