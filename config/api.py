@@ -15,20 +15,32 @@ class LiveClassViewSet(ModelViewSet):
     queryset = LiveClass.objects.all()
     serializer_class = LiveClassSerializer
 
+    def perform_create(self, serializer):
+        serializer.save(teacher=self.request.user)
+
 
 class QuizViewSet(ModelViewSet):
     queryset = Quiz.objects.all()
     serializer_class = QuizSerializer
+
+    def perform_create(self, serializer):
+        serializer.save(created_by=self.request.user)
 
 
 class ExamViewSet(ModelViewSet):
     queryset = Exam.objects.all()
     serializer_class = ExamSerializer
 
+    def perform_create(self, serializer):
+        serializer.save(created_by=self.request.user)
+
 
 class AssignmentViewSet(ModelViewSet):
     queryset = Assignment.objects.all()
     serializer_class = AssignmentSerializer
+
+    def perform_create(self, serializer):
+        serializer.save(created_by=self.request.user)
 
 
 class SubmissionViewSet(ModelViewSet):
@@ -40,6 +52,9 @@ class BatchViewSet(ModelViewSet):
     queryset = Batch.objects.all()
     serializer_class = BatchSerializer
 
+    def perform_create(self, serializer):
+        serializer.save(teacher=self.request.user)
+
 
 class StudentViewSet(ModelViewSet):
     queryset = Student.objects.all()
@@ -49,6 +64,9 @@ class StudentViewSet(ModelViewSet):
 class AttendanceSessionViewSet(ModelViewSet):
     queryset = AttendanceSession.objects.all()
     serializer_class = AttendanceSessionSerializer
+
+    def perform_create(self, serializer):
+        serializer.save(created_by=self.request.user)
 
 
 class AttendanceRecordViewSet(ModelViewSet):
@@ -64,6 +82,9 @@ class DoubtViewSet(ModelViewSet):
 class TaskViewSet(ModelViewSet):
     queryset = Task.objects.all()
     serializer_class = TaskSerializer
+
+    def perform_create(self, serializer):
+        serializer.save(created_by=self.request.user)
 
 
 class TaskStatusViewSet(ModelViewSet):

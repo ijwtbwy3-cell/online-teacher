@@ -11,39 +11,31 @@ from tasks.models import Task, TaskPriority, TaskStatus
 
 
 class LiveClassSerializer(serializers.ModelSerializer):
-    teacher = serializers.HiddenField(default=serializers.CurrentUserDefault())
-
     class Meta:
         model = LiveClass
         fields = '__all__'
-        read_only_fields = ('created_at',)
+        read_only_fields = ('teacher', 'created_at')
 
 
 class QuizSerializer(serializers.ModelSerializer):
-    created_by = serializers.HiddenField(default=serializers.CurrentUserDefault())
-
     class Meta:
         model = Quiz
         fields = '__all__'
-        read_only_fields = ('created_at',)
+        read_only_fields = ('created_by', 'created_at')
 
 
 class ExamSerializer(serializers.ModelSerializer):
-    created_by = serializers.HiddenField(default=serializers.CurrentUserDefault())
-
     class Meta:
         model = Exam
         fields = '__all__'
-        read_only_fields = ('created_at',)
+        read_only_fields = ('created_by', 'created_at')
 
 
 class AssignmentSerializer(serializers.ModelSerializer):
-    created_by = serializers.HiddenField(default=serializers.CurrentUserDefault())
-
     class Meta:
         model = Assignment
         fields = '__all__'
-        read_only_fields = ('created_at',)
+        read_only_fields = ('created_by', 'created_at')
 
 
 class SubmissionSerializer(serializers.ModelSerializer):
@@ -54,12 +46,10 @@ class SubmissionSerializer(serializers.ModelSerializer):
 
 
 class BatchSerializer(serializers.ModelSerializer):
-    teacher = serializers.HiddenField(default=serializers.CurrentUserDefault())
-
     class Meta:
         model = Batch
         fields = '__all__'
-        read_only_fields = ('created_at',)
+        read_only_fields = ('teacher', 'created_at')
 
 
 class StudentSerializer(serializers.ModelSerializer):
@@ -70,12 +60,10 @@ class StudentSerializer(serializers.ModelSerializer):
 
 
 class AttendanceSessionSerializer(serializers.ModelSerializer):
-    created_by = serializers.HiddenField(default=serializers.CurrentUserDefault())
-
     class Meta:
         model = AttendanceSession
         fields = '__all__'
-        read_only_fields = ('created_at',)
+        read_only_fields = ('created_by', 'created_at')
 
 
 class AttendanceRecordSerializer(serializers.ModelSerializer):
@@ -92,12 +80,10 @@ class DoubtSerializer(serializers.ModelSerializer):
 
 
 class TaskSerializer(serializers.ModelSerializer):
-    created_by = serializers.HiddenField(default=serializers.CurrentUserDefault())
-
     class Meta:
         model = Task
         fields = '__all__'
-        read_only_fields = ('created_at',)
+        read_only_fields = ('created_by', 'created_at')
 
 
 class TaskStatusSerializer(serializers.ModelSerializer):
