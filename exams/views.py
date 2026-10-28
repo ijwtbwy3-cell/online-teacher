@@ -6,7 +6,7 @@ from .models import Exam
 
 @login_required
 def exam_list(request):
-    search_query = request.GET.get('q', '').strip()
+    search_query = request.GET.get('q', '')
     exams = Exam.objects.filter(title__icontains = search_query)
     return render(request, 'exams/list.html', {'exams': exams,'search_query': search_query,})
 

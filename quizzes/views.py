@@ -7,7 +7,7 @@ from .models import Quiz
 
 @login_required
 def quiz_list(request):
-    search_query = request.GET.get('q', '').strip()
+    search_query = request.GET.get('q', '')
     quizzes = Quiz.objects.filter(title__icontains = search_query)
 
     return render(request, 'quizzes/list.html', {

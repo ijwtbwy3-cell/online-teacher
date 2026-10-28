@@ -17,7 +17,7 @@ LIVE_CLASS_STATUSES = (
 @login_required
 def liveclass_list(request):
     selected_tab = request.GET.get('tab', 'scheduled')
-    search_query = request.GET.get('q', '').strip()
+    search_query = request.GET.get('q', '')
     if selected_tab == 'history':
         live_classes = LiveClass.objects.filter(status = 'completed')
     else:

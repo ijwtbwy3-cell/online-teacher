@@ -5,7 +5,7 @@ from .models import Batch
 
 @login_required
 def batch_list(request):
-    search_query = request.GET.get('q', '').strip()
+    search_query = request.GET.get('q', '')
     batches = Batch.objects.filter(name__icontains = search_query)
     return render(request, 'batches/list.html', {
         'batches': batches,

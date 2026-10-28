@@ -7,7 +7,7 @@ from .models import Assignment
 
 @login_required
 def assignment_list(request):
-    search_query = request.GET.get('q', '').strip()
+    search_query = request.GET.get('q', '')
     assignments = Assignment.objects.filter(title__icontains = search_query)
     return render(request, 'assignments/list.html', {
         'assignments': assignments,
