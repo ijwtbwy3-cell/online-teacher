@@ -13,6 +13,5 @@ class LiveClass(models.Model):
     created_at = models.DateTimeField(auto_now_add = True)
     class Meta:
         ordering = ['-scheduled_at']
-        verbose_name_plural = 'Live Classes'
     def __str__(self):
         return self.title

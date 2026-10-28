@@ -9,8 +9,8 @@ def login_view(request):
     if request.method == 'POST':
         user = authenticate(
             request,
-            username=request.POST.get('username'),
-            password=request.POST.get('password'),
+            username = request.POST.get('username'),
+            password = request.POST.get('password'),
         )
         if user:
             login(request, user)

@@ -8,7 +8,6 @@ class TaskStatus(models.Model):
 
     class Meta:
         ordering = ['label']
-        verbose_name_plural = 'Task statuses'
 
     def __str__(self):
         return self.label
@@ -20,7 +19,6 @@ class TaskPriority(models.Model):
 
     class Meta:
         ordering = ['label']
-        verbose_name_plural = 'Task priorities'
 
     def __str__(self):
         return self.label

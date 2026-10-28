@@ -1,8 +1,8 @@
-FROM python:3.12
+FROM python:3.12.10
 
-ENV PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1
+ENV PYTHONUNBUFFERED 1
 
-WORKDIR /app
+WORKDIR /config
 
 COPY requirements.txt .
 RUN pip install -r requirements.txt
