@@ -18,7 +18,10 @@ LIVE_CLASS_STATUSES = (
 def liveclass_list(request):
     selected_tab = request.GET.get('tab', 'scheduled')
     search_query = request.GET.get('q', '').strip()
-    live_classes = LiveClass.objects.filter(status = 'completed') if selected_tab == 'history' else LiveClass.objects.exclude(status = 'completed')
+    if selected_tab == 'history':
+        live_classes = LiveClass.objects.filter(status = 'completed')
+    else:
+        live_classes = LiveClass.objects.exclude(status = 'completed')
 
     return render(request, 'liveclasses/list.html', {
         'live_classes': live_classes.filter(title__icontains = search_query),
