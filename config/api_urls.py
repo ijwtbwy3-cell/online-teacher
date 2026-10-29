@@ -1,6 +1,13 @@
-from rest_framework.routers import DefaultRouter    
-from config.api import (AssignmentViewSet,AttendanceRecordViewSet,AttendanceSessionViewSet,BatchViewSet,DoubtViewSet,ExamViewSet,LiveClassViewSet,QuizViewSet,StudentViewSet,SubmissionViewSet,TaskPriorityViewSet,TaskStatusViewSet,TaskViewSet,)
-
+from rest_framework.routers import DefaultRouter
+from assignments.api import AssignmentViewSet, SubmissionViewSet
+from attendance.api import AttendanceRecordViewSet, AttendanceSessionViewSet
+from batches.api import BatchViewSet
+from doubts.api import DoubtViewSet
+from exams.api import ExamViewSet
+from liveclasses.api import LiveClassViewSet
+from quizzes.api import QuizViewSet
+from students.api import StudentViewSet
+from tasks.api import TaskPriorityViewSet, TaskStatusViewSet, TaskViewSet
 
 api_router = DefaultRouter()
 api_router.register('live-classes', LiveClassViewSet)
