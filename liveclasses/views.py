@@ -37,7 +37,7 @@ def liveclass_detail(request, pk):
         status = request.POST.get('status')
         if status in dict(LIVE_CLASS_STATUSES):
             live_class.status = status
-            live_class.save(update_fields = ['status'])
+            live_class.save()
             messages.success(request, 'Class status updated')
             return redirect('liveclass_detail', pk = live_class.pk)
         messages.error(request, 'Please select a valid status')
