@@ -6,19 +6,19 @@
     {% csrf_token %}
     <div>
       <label for = "quiz-title" class = "sr-only">Quiz title</label>
-      <textarea id = "quiz-title" name = "title" maxlength = "255" required rows = "3" placeholder = "Enter topic of Quiz..." class = "w-full resize-none border-0 bg-slate-100 px-3 py-3 text-sm placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+      <textarea id = "quiz-title" name = "title" maxlength = "255" required rows = "3" placeholder = "Enter topic of Quiz..." class = "w-full resize-none border-0 bg-slate-100 px-3 py-3 text-sm placeholder:text-slate-500"></textarea>
     </div>
     <div>
       <label for = "quiz-course" class = "sr-only">Course</label>
-      <input id = "quiz-course" type = "text" name = "course" placeholder = "Enter course" class = "w-full border border-slate-800 bg-white px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+      <input id = "quiz-course" type = "text" name = "course" placeholder = "Enter course" class = "w-full border border-slate-800 bg-white px-4 py-3 text-sm">
     </div>
     <div>
       <label for = "quiz-subject" class = "sr-only">Subject</label>
-      <input id = "quiz-subject" type = "text" name = "subject" placeholder = "Enter subject" class = "w-full border border-slate-800 bg-white px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+      <input id = "quiz-subject" type = "text" name = "subject" placeholder = "Enter subject" class = "w-full border border-slate-800 bg-white px-4 py-3 text-sm">
     </div>
     <div>
       <label for = "quiz-batch" class = "sr-only">Batch</label>
-      <select id = "quiz-batch" name = "batch" class = "w-full border border-slate-800 bg-white px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+      <select id = "quiz-batch" name = "batch" class = "w-full border border-slate-800 bg-white px-4 py-3 text-sm">
         <option value = "">Select Batch</option>
         {% for batch in batches %}
         <option value = "{{ batch.pk }}">{{ batch.name }}</option>
@@ -30,22 +30,22 @@
       <div class = "space-y-3">
         <div>
           <label for = "quiz-start" class = "mb-1 block px-1 text-xs text-slate-500">Starts</label>
-          <input id = "quiz-start" type = "datetime-local" name = "start_at" class = "w-full border border-slate-300 bg-slate-100 px-3 py-3 text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
+          <input id = "quiz-start" type = "datetime-local" name = "start_at" class = "w-full border border-slate-300 bg-slate-100 px-3 py-3 text-sm text-slate-700">
         </div>
         <div>
           <label for = "quiz-end" class = "mb-1 block px-1 text-xs text-slate-500">Ends</label>
-          <input id = "quiz-end" type = "datetime-local" name = "end_at" class = "w-full border border-slate-300 bg-slate-100 px-3 py-3 text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
+          <input id = "quiz-end" type = "datetime-local" name = "end_at" class = "w-full border border-slate-300 bg-slate-100 px-3 py-3 text-sm text-slate-700">
         </div>
       </div>
     </div>
     <div class = "grid grid-cols-2 gap-3">
       <div>
         <label for = "quiz-questions" class = "mb-1 block px-1 text-sm text-slate-600">Questions</label>
-        <input id = "quiz-questions" type = "number" name = "questions_count" min = "0" value = "50" class = "w-full border border-slate-300 bg-white px-3 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+        <input id = "quiz-questions" type = "number" name = "questions_count" min = "0" value = "50" class = "w-full border border-slate-300 bg-white px-3 py-3 text-sm">
       </div>
       <div>
         <label for = "quiz-passing" class = "mb-1 block px-1 text-sm text-slate-600">Passing %</label>
-        <input id = "quiz-passing" type = "number" name = "passing_percentage" min = "0" max = "100" value = "70" class = "w-full border border-slate-300 bg-white px-3 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+        <input id = "quiz-passing" type = "number" name = "passing_percentage" min = "0" max = "100" value = "70" class = "w-full border border-slate-300 bg-white px-3 py-3 text-sm">
       </div>
     </div>
     <label class = "flex items-center gap-2 px-1 text-sm text-slate-600">
