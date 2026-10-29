@@ -4,7 +4,6 @@
 <meta charset = "UTF-8">
 <meta name = "viewport" content = "width=device-width, initial-scale=1.0">
 <script src = "https://cdn.tailwindcss.com"></script>
-
 </head>
 <body class = "bg-white text-slate-800">
 <div class = "flex min-h-screen">
@@ -48,9 +47,8 @@
 
     <header class = "bg-blue-600 text-white px-8 py-4 flex items-center justify-between">
       <h1 class = "text-xl font-semibold">Hi, {{ request.user.username }}</h1>
-      <div class = "relative">
-        <input id = "account-menu-toggle" type = "checkbox" class = "peer sr-only">
-        <label for = "account-menu-toggle" class = "block cursor-pointer">
+      <details class = "relative">
+        <summary aria-label = "Open account menu" class = "block list-none cursor-pointer">
           <span class = "flex h-7 w-7 items-center justify-center overflow-hidden rounded-full bg-blue-100 text-sm font-semibold">
             {% if request.user.avatar %}
             <img src = "{{ request.user.avatar.url }}" alt = "" class = "h-full w-full object-cover">
@@ -58,8 +56,8 @@
             {{ request.user.username|first|upper }}
             {% endif %}
           </span>
-        </label>
-        <div class = "absolute right-0 z-20 mt-3 hidden w-60 overflow-hidden border border-slate-100 bg-white py-2 text-slate-700 shadow-lg peer-checked:block">
+        </summary>
+        <div class = "account-menu absolute right-0 z-20 mt-3 w-60 overflow-hidden border border-slate-100 bg-white py-2 text-slate-700 shadow-lg">
           <a href = "{% url 'profile' %}" class = "block px-4 py-3 text-sm">
             My Profile
           </a>
@@ -70,7 +68,7 @@
             Log Out
           </a>
         </div>
-      </div>
+      </details>
     </header>
 
     <main class = "p-8 bg-slate-50 min-h-[calc(100vh-64px)]">

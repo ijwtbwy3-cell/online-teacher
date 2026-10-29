@@ -1,0 +1,8 @@
+<form method="get" class="{{ form_class }}">
+  {% if selected_tab %}<input type="hidden" name="tab" value="{{ selected_tab }}">{% endif %}
+  <label for="{{ input_id }}" class="sr-only">{{ label }}</label>
+  <div class="flex w-full max-w-md gap-2">
+    <input id="{{ input_id }}" type="search" name="q" value="{{ search_query }}" placeholder="{{ placeholder }}" class="min-w-0 flex-1 border border-slate-300 bg-white px-3 py-2 text-sm">
+    <button type="submit" class="bg-blue-600 px-4 py-2 text-sm text-white">Search</button>
+  </div>
+</form>

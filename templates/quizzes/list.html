@@ -10,11 +10,7 @@
     <span class = "pb-3 text-slate-400">Question Bank</span>
     <span class = "pb-3 text-slate-400">History</span>
   </div>
-  <form method = "get" class = "flex w-full max-w-md gap-2">
-    <label for = "quiz-search" class = "sr-only">Search quizzes</label>
-    <input id = "quiz-search" type = "search" name = "q" value = "{{ search_query }}" placeholder = "Search quizzes..." class = "min-w-0 flex-1 border border-slate-300 bg-white px-3 py-2 text-sm">
-    <button type = "submit" class = "bg-blue-600 px-4 py-2 text-sm text-white">Search</button>
-  </form>
+  {% include "components/search_form.html" with input_id="quiz-search" label="Search quizzes" placeholder="Search quizzes..." search_query=search_query form_class="w-full max-w-md" %}
 </div>
 <div class = "grid grid-cols-3 gap-5">
 {% for quiz in quizzes %}

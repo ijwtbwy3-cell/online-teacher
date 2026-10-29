@@ -30,9 +30,10 @@ def assignment_create(request):
     if request.method == 'POST':
         batch_id = request.POST.get('batch')
         batch = batches.filter(pk = batch_id).first()
-        if batch_id and not batch:
-            messages.error(request, 'Please select a valid batch')
-            return render(request, 'assignments/form.html', {'batches': batches})
+        if batch_id:
+            if not batch:
+                messages.error(request, 'Please select a valid batch')
+                return render(request, 'assignments/form.html', {'batches': batches})
 
         due_date = request.POST.get('due_date')
         if not due_date:

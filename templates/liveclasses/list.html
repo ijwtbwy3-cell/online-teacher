@@ -17,12 +17,7 @@
     <button type = "submit" class = "pb-3 text-slate-600">Class History</button>
   </form>
   </div>
-  <form method = "get" class = "flex w-full max-w-md gap-2">
-    <input type = "hidden" name = "tab" value = "{{ selected_tab }}">
-    <label for = "live-class-search" class = "sr-only">Search live classes</label>
-    <input id = "live-class-search" type = "search" name = "q" value = "{{ search_query }}" placeholder = "Search by class title..." class = "min-w-0 flex-1 border border-slate-300 bg-white px-3 py-2 text-sm">
-    <button type = "submit" class = "bg-blue-600 px-4 py-2 text-sm text-white">Search</button>
-  </form>
+  {% include "components/search_form.html" with input_id="live-class-search" label="Search live classes" placeholder="Search by class title..." search_query=search_query selected_tab=selected_tab form_class="w-full max-w-md" %}
 </div>
 <div class = "grid grid-cols-3 gap-5">
 {% for live_class in live_classes %}
