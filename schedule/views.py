@@ -5,20 +5,21 @@ from liveclasses.models import LiveClass
 
 @login_required
 def schedule_view(request):
-    columns = []
     statuses = [
-        ('not_started', 'Not Started', 'bg-slate-500'),
-        ('starting_soon', 'Starting Soon', 'bg-amber-500'),
-        ('ongoing', 'Ongoing', 'bg-blue-500'),
-        ('completed', 'Completed', 'bg-emerald-500'),
-        ('cancelled', 'Cancelled', 'bg-rose-600'),
+        {'status': 'not_started', 'label': 'Not Started', 'header_class': 'bg-slate-500'},
+        {'status': 'starting_soon', 'label': 'Starting Soon', 'header_class': 'bg-amber-500'},
+        {'status': 'ongoing', 'label': 'Ongoing', 'header_class': 'bg-blue-500'},
+        {'status': 'completed', 'label': 'Completed', 'header_class': 'bg-emerald-500'},
+        {'status': 'cancelled', 'label': 'Cancelled', 'header_class': 'bg-rose-600'},
     ]
 
-    for code, label, header in statuses:
-        columns.append({
-            'label': label,
-            'header_class': header,
-            'live_classes': LiveClass.objects.filter(status = code).order_by('scheduled_at'),
-        })
+    columns = []
+    for status in statuses:
+        column = {
+            'label': status['label'],
+            'header_class': status['header_class'],
+            'live_classes': LiveClass.objects.filter(status = status['status']).order_by('scheduled_at'),
+        }
+        columns.append(column)
 
     return render(request, 'schedule/list.html', {'columns': columns})
